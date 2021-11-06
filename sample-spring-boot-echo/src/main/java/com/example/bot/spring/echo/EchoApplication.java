@@ -42,7 +42,8 @@ public class EchoApplication {
     public Message handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         log.info("event: " + event);
         final String originalMessageText = event.getMessage().getText();
-        return new TextMessage(originalMessageText);
+        final String subText = "それロマサガの話？";
+        return new TextMessage(subText);
     }
 
     @EventMapping
