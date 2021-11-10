@@ -5,4 +5,5 @@ dependencies {
     implementation project(':line-bot-spring-boot')
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.3.4'
 }
