@@ -54,7 +54,7 @@ public class EchoApplication {
         final String originalMessageText = event.getMessage().getText();
         
 
-        	String area = "&lage_area=Z063";
+        	String area = "&large_area=Z063";
         	String keyword = "&keyword="+originalMessageText;
         
         
@@ -71,7 +71,7 @@ public class EchoApplication {
     public String shopAndKuchikomiSearch(String str) {
 
     	// クライアントから受け取ったパラメータをキーに、Hotpepper APIから店舗情報を取得する。(変数とかは自分で設定）
-    	String url = "http://webservice.recruit.co.jp/hotpepper/shop/v1/?key=";
+    	String url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=";
     	String key = "361d7b4b2da2a9f5";
     	String urlString = url+key
     	+ str
@@ -88,7 +88,7 @@ public class EchoApplication {
     		StringBuffer sb = new StringBuffer();
     		String line = "";
     		//文字型入力ストリームを作成
-    		BufferedReader br = new BufferedReader(new InputStreamReader(stream));
+    		BufferedReader br = new BufferedReader(new InputStreamReader(stream,"UTF-8"));
     		//読めなくなるまでwhile文で回す
     		while((line = br.readLine()) != null) {
     			sb.append(line);
