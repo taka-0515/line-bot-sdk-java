@@ -58,7 +58,7 @@ public class EchoApplication {
         	String keyword = "&keyword="+originalMessageText;
         
         
-        final String subText = shopAndKuchikomiSearch(area+keyword);
+        String subText = shopAndKuchikomiSearch(area+keyword);
         if (subText == "") {
         	subText = "not";
         }
