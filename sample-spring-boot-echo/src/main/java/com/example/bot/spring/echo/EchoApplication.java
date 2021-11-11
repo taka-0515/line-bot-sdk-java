@@ -59,6 +59,10 @@ public class EchoApplication {
         
         
         final String subText = shopAndKuchikomiSearch(area+keyword);
+        if (subText.isEmpty()) {
+        	subText = "無理でした。";
+        }
+        	
         return new TextMessage(subText);
     }
 
