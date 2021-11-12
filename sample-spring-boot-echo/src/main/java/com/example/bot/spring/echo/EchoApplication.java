@@ -52,7 +52,7 @@ public class EchoApplication {
     public Message handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         log.info("event: " + event);
         final String originalMessageText = event.getMessage().getText();
-        
+        	log.info(originalMessageText);
 
         	String area = "&large_area=Z063";
         	String keyword = "&keyword="+originalMessageText;
@@ -114,10 +114,10 @@ public class EchoApplication {
     		return results;
 		} catch (MalformedURLException e) {
 			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			log.error("URL error",e);
 		} catch (IOException e) {
 			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			log.error("IO error",e);
 		}
 		return results;
     }
