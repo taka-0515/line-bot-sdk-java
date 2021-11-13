@@ -63,7 +63,7 @@ public class EchoApplication {
         	subText = "not";
         }
         	
-        return new TextMessage(subText);
+        return new TextMessage(originalMessageText);
     }
 
     @EventMapping
