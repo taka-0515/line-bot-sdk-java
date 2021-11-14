@@ -60,10 +60,12 @@ public class EchoApplication {
         
         String subText = shopAndKuchikomiSearch(area+keyword);
         if (subText == "") {
-        	subText = "not";
+        	subText = "その店出てこんわ";
+        } else {
+        	subText = subText + "ここどうけ？";
         }
         	
-        return new TextMessage(originalMessageText);
+        return new TextMessage(subText);
     }
 
     @EventMapping
