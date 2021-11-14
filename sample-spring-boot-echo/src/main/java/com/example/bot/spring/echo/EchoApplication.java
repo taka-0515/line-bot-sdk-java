@@ -58,10 +58,10 @@ public class EchoApplication {
         	String keyword = "&keyword="+originalMessageText;
         
         
-//        String subText = shopAndKuchikomiSearch(area+keyword);
-//        if (subText == "") {
-//        	subText = "not";
-//        }
+        String subText = shopAndKuchikomiSearch(area+keyword);
+        if (subText == "") {
+        	subText = "not";
+        }
         	
         return new TextMessage(originalMessageText);
     }
@@ -71,54 +71,54 @@ public class EchoApplication {
         System.out.println("event: " + event);
     }
     
-//    // 試しにリクエスト用のメソッド
-//    public String shopAndKuchikomiSearch(String str) {
-//
-//    	// クライアントから受け取ったパラメータをキーに、Hotpepper APIから店舗情報を取得する。(変数とかは自分で設定）
-//    	String url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=";
-//    	String key = "361d7b4b2da2a9f5";
-//    	String urlString = url+key
-//    	+ str
-//    	+ "&format=json";
-//
-//    	String results = "";
-//
-//    	//try-catchで囲む
-//    	InputStream stream;
-//		try {
-//			stream = new URL(urlString).openStream();
-//
-//    		//文字列のバッファを構築
-//    		StringBuffer sb = new StringBuffer();
-//    		String line = "";
-//    		//文字型入力ストリームを作成
-//    		BufferedReader br = new BufferedReader(new InputStreamReader(stream,"UTF-8"));
-//    		//読めなくなるまでwhile文で回す
-//    		while((line = br.readLine()) != null) {
-//    			sb.append(line);
-//    		}
-//    		stream.close();
-//    		String script = sb.toString();
-//
-//    		//ObjectMapperオブジェクトの宣言
-//    		ObjectMapper mapper = new ObjectMapper();
-//
-//    		//JSON形式をクラスオブジェクトに変換
-//    		JsonNode node = mapper.readTree(script).get("results").get("shop");
-//
-//    		//クラスオブジェクトの中から必要なものだけを取りだす
-//    		for (int i = 0; i < node.size(); i++) {
-//    			String name = node.get(i).get("name").asText();
-//    			results = results + name + "\n";
-//    		}
-//    		return results;
-//		} catch (MalformedURLException e) {
-//			// TODO 自動生成された catch ブロック
-//			log.error("URL error",e);
-//		} catch (IOException e) {
-//			// TODO 自動生成された catch ブロック
-//			log.error("IO error",e);
-//		}
-//		return results;
-//    }
+    // 試しにリクエスト用のメソッド
+    public String shopAndKuchikomiSearch(String str) {
+
+    	// クライアントから受け取ったパラメータをキーに、Hotpepper APIから店舗情報を取得する。(変数とかは自分で設定）
+    	String url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=";
+    	String key = "361d7b4b2da2a9f5";
+    	String urlString = url+key
+    	+ str
+    	+ "&format=json";
+
+    	String results = "";
+
+    	//try-catchで囲む
+    	InputStream stream;
+		try {
+			stream = new URL(urlString).openStream();
+
+    		//文字列のバッファを構築
+    		StringBuffer sb = new StringBuffer();
+    		String line = "";
+    		//文字型入力ストリームを作成
+    		BufferedReader br = new BufferedReader(new InputStreamReader(stream,"UTF-8"));
+    		//読めなくなるまでwhile文で回す
+    		while((line = br.readLine()) != null) {
+    			sb.append(line);
+    		}
+    		stream.close();
+    		String script = sb.toString();
+
+    		//ObjectMapperオブジェクトの宣言
+    		ObjectMapper mapper = new ObjectMapper();
+
+    		//JSON形式をクラスオブジェクトに変換
+    		JsonNode node = mapper.readTree(script).get("results").get("shop");
+
+    		//クラスオブジェクトの中から必要なものだけを取りだす
+    		for (int i = 0; i < node.size(); i++) {
+    			String name = node.get(i).get("name").asText();
+    			results = results + name + "\n";
+    		}
+    		return results;
+		} catch (MalformedURLException e) {
+			// TODO 自動生成された catch ブロック
+			log.error("URL error",e);
+		} catch (IOException e) {
+			// TODO 自動生成された catch ブロック
+			log.error("IO error",e);
+		}
+		return results;
+    }
 }
