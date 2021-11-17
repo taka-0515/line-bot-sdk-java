@@ -60,10 +60,8 @@ public class EchoApplication {
         
         String subText = shopAndKuchikomiSearch(area+keyword);
         if (subText == "") {
-        	subText = "その店出てこんわ";
-        } else {
-        	subText = subText + "ここどうけ？";
-        }
+        	subText = "探したけどないわ〜";
+        } 
         	
         return new TextMessage(subText);
     }
@@ -111,7 +109,12 @@ public class EchoApplication {
     		//クラスオブジェクトの中から必要なものだけを取りだす
     		for (int i = 0; i < node.size(); i++) {
     			String name = node.get(i).get("name").asText();
-    			results = results + name + "\n";
+    			if (name.isBlank()) {
+    				results = results + name + "とかどうけ？\n";
+    				String genre = node.get(i).get("genre").get("catch").asText();
+    				results = results + genre + "なんやけど\n";
+    			}
+    			break;
     		}
     		return results;
 		} catch (MalformedURLException e) {
