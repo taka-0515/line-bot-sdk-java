@@ -112,7 +112,7 @@ public class EchoApplication {
     			if (name != null || name != "") {
     				results = results + name + "とかどうけ？\n";
     				String genre = node.get(i).get("genre").get("catch").asText();
-    				results = results + genre + "なんやけど\n";
+    				results = results + genre + "なんやけど";
     			}
     			break;
     		}
