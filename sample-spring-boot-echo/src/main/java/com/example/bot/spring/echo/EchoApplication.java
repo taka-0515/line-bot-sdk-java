@@ -23,12 +23,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.connector.UrlConnecter;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.linecorp.bot.model.event.Event;
@@ -53,15 +57,8 @@ public class EchoApplication {
         log.info("event: " + event);
         final String originalMessageText = event.getMessage().getText();
         	log.info(originalMessageText);
-
-        	String area = "&large_area=Z063";
-        	String keyword = "&keyword="+originalMessageText;
+        String subText = shopAndKuchikomiSearch(originalMessageText);
         
-        
-        String subText = shopAndKuchikomiSearch(area+keyword);
-        if (subText == "") {
-        	subText = "探したけどないわ〜";
-        } 
         	
         return new TextMessage(subText);
     }
@@ -77,53 +74,40 @@ public class EchoApplication {
     	// クライアントから受け取ったパラメータをキーに、Hotpepper APIから店舗情報を取得する。(変数とかは自分で設定）
     	String url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=";
     	String key = "361d7b4b2da2a9f5";
+    	String area = "&large_area=Z063";
+    	String keyword = "&keyword="+str;
     	String urlString = url+key
-    	+ str
+    	+ area
+    	+ keyword
     	+ "&format=json";
 
     	String results = "";
+    	UrlConnecter urlCon = new UrlConnecter();
+    	String script = urlCon.getResponseStr(urlString);
+    	//ObjectMapperオブジェクトの宣言
+    	ObjectMapper mapper = new ObjectMapper();
 
-    	//try-catchで囲む
-    	InputStream stream;
+    	//JSON形式をクラスオブジェクトに変換
+    	JsonNode node;
 		try {
-			stream = new URL(urlString).openStream();
-
-    		//文字列のバッファを構築
-    		StringBuffer sb = new StringBuffer();
-    		String line = "";
-    		//文字型入力ストリームを作成
-    		BufferedReader br = new BufferedReader(new InputStreamReader(stream,"UTF-8"));
-    		//読めなくなるまでwhile文で回す
-    		while((line = br.readLine()) != null) {
-    			sb.append(line);
+			node = mapper.readTree(script).get("results").get("shop");
+			Random random = new Random();
+			int randomValue = random.nextInt(node.size() - 1);
+			//クラスオブジェクトの中から必要なものだけを取りだす
+    		String name = node.get(randomValue).get("name").asText();
+    		if (name != null || name != "") {
+    			results = results + name + "とかどうけ？\n";
+    			String genre = node.get(randomValue).get("genre").get("catch").asText();
+    			results = results + genre + "なんやけど";
     		}
-    		stream.close();
-    		String script = sb.toString();
-
-    		//ObjectMapperオブジェクトの宣言
-    		ObjectMapper mapper = new ObjectMapper();
-
-    		//JSON形式をクラスオブジェクトに変換
-    		JsonNode node = mapper.readTree(script).get("results").get("shop");
-
-    		//クラスオブジェクトの中から必要なものだけを取りだす
-    		for (int i = 0; i < node.size(); i++) {
-    			String name = node.get(i).get("name").asText();
-    			if (name != null || name != "") {
-    				results = results + name + "とかどうけ？\n";
-    				String genre = node.get(i).get("genre").get("catch").asText();
-    				results = results + genre + "なんやけど";
-    			}
-    			break;
-    		}
-    		return results;
-		} catch (MalformedURLException e) {
-			// TODO 自動生成された catch ブロック
-			log.error("URL error",e);
-		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			log.error("IO error",e);
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
 		}
-		return results;
+		if (results == "") {
+        	results = "探したけどないわ〜";
+        } 
+    	return results;
     }
 }
