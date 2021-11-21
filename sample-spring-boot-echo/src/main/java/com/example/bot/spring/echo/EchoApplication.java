@@ -92,7 +92,7 @@ public class EchoApplication {
 		try {
 			node = mapper.readTree(script).get("results").get("shop");
 			Random random = new Random();
-			int randomValue = random.nextInt(node.size() - 1);
+			int randomValue = random.nextInt(node.size() - 1)+100;
 			//クラスオブジェクトの中から必要なものだけを取りだす
     		String name = node.get(randomValue).get("name").asText();
     		if (name != null || name != "") {
