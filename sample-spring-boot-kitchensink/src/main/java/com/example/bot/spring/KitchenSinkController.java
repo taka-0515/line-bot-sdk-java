@@ -641,7 +641,7 @@ public class KitchenSinkController {
                 
                 	
                 return new TextMessage(subText);
-                );
+//                );
                 break;
         }
     }
