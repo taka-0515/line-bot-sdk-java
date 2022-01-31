@@ -38,6 +38,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.google.common.io.ByteStreams;
+import com.connector.UrlConnecter;
 
 import com.linecorp.bot.client.LineBlobClient;
 import com.linecorp.bot.client.LineMessagingClient;
@@ -631,17 +632,16 @@ public class KitchenSinkController {
                 break;
             default:
                 log.info("Returns echo message {}: {}", replyToken, text);
-//                this.replyText(
-//                        replyToken,
-//                        text
+
                 log.info("event: " + event);
                 final String originalMessageText = text;
                 	log.info(originalMessageText);
                 String subText = shopAndKuchikomiSearch(originalMessageText);
                 
-                	
-                return new TextMessage(subText);
-//                );
+                this.replyText(
+                        replyToken,
+                        subText
+                	);
                 break;
         }
     }
