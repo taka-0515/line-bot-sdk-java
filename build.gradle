@@ -117,10 +117,6 @@ subprojects {
         testImplementation 'org.hibernate.validator:hibernate-validator'
         testImplementation 'org.springframework.boot:spring-boot-starter-test' // MockHttpServletRequest
         testImplementation 'org.springframework.boot:spring-boot-starter-logging'
-        
-            implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.0'
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.0'
     }
 
     compileJava.dependsOn(processResources)

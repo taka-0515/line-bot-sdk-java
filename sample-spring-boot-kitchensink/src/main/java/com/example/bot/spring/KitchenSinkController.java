@@ -40,10 +40,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.google.common.io.ByteStreams;
 import com.connector.UrlConnecter;
-import com.example.bot.spring.echo.JsonMappingException;
-import com.example.bot.spring.echo.JsonNode;
-import com.example.bot.spring.echo.JsonProcessingException;
-import com.example.bot.spring.echo.ObjectMapper;
 import com.linecorp.bot.client.LineBlobClient;
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.MessageContentResponse;
