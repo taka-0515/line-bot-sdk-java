@@ -29,7 +29,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
@@ -40,10 +39,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.google.common.io.ByteStreams;
 import com.connector.UrlConnecter;
-import com.example.bot.spring.echo.JsonMappingException;
-import com.example.bot.spring.echo.JsonNode;
-import com.example.bot.spring.echo.JsonProcessingException;
-import com.example.bot.spring.echo.ObjectMapper;
+
 import com.linecorp.bot.client.LineBlobClient;
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.MessageContentResponse;
@@ -643,49 +639,6 @@ public class KitchenSinkController {
                 this.replyText(replyToken,subText);
                 break;
         }
-    }
-    
-    // 試しにリクエスト用のメソッド
-    public String shopAndKuchikomiSearch(String str) {
-
-    	// クライアントから受け取ったパラメータをキーに、Hotpepper APIから店舗情報を取得する。(変数とかは自分で設定）
-    	String url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=";
-    	String key = "361d7b4b2da2a9f5";
-    	String area = "&large_area=Z063";
-    	String keyword = "&keyword="+str;
-    	String urlString = url+key
-    	+ area
-    	+ keyword
-    	+ "&format=json";
-
-    	String results = "";
-    	UrlConnecter urlCon = new UrlConnecter();
-    	String script = urlCon.getResponseStr(urlString);
-    	//ObjectMapperオブジェクトの宣言
-    	ObjectMapper mapper = new ObjectMapper();
-
-    	//JSON形式をクラスオブジェクトに変換
-    	JsonNode node;
-		try {
-			node = mapper.readTree(script).get("results").get("shop");
-			Random random = new Random();
-			int randomValue = random.nextInt(node.size());
-			//クラスオブジェクトの中から必要なものだけを取りだす
-    		String name = node.get(randomValue).get("name").asText();
-    		if (name != null || name != "") {
-    			results = results + name + "とかどうけ？\n";
-    			String genre = node.get(randomValue).get("genre").get("catch").asText();
-    			results = results + genre + "なんやけど";
-    		}
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		if (results == "") {
-        	results = "探したけどないわ〜";
-        } 
-    	return results;
     }
 
     private static URI createUri(String path) {
