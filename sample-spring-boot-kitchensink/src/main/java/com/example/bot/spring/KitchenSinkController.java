@@ -632,11 +632,16 @@ public class KitchenSinkController {
                 break;
             default:
                 log.info("Returns echo message {}: {}", replyToken, text);
+
+                log.info("event: " + event);
                 final String originalMessageText = text;
                 	log.info(originalMessageText);
                 String subText = shopAndKuchikomiSearch(originalMessageText);
                 
-                this.replyText(replyToken,subText);
+                this.replyText(
+                        replyToken,
+                        subText
+                	);
                 break;
         }
     }
